@@ -4,3 +4,7 @@ python-telegram-bot==20.0
 pytz
 timezonefinder
 swisseph
+geopy
+pyswisseph
+telegram
+flask

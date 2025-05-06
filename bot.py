@@ -1,11 +1,13 @@
 import logging
 import os
 import json
+import threading
 from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackQueryHandler, ContextTypes
 from astro_calc import process_user_data
 from ai_interpreter import generate_transit_message
+from server import app  # импортируем Flask-приложение
 
 load_dotenv()
 
@@ -18,6 +20,12 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
+
+def run():
+    app.run(host="0.0.0.0", port=8080)
+
+    # Запускаем Flask-сервер в отдельном потоке
+    threading.Thread(target=run).start()
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -87,7 +95,7 @@ async def handle_transit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
         logger.info(f"📌 Данные для анализа: Сатурн={saturn}, Марс={mars}, Юпитер={jupiter}, Аспекты={len(aspects)} шт.")
 
-        message = await generate_transit_message(
+        message = generate_transit_message(
         neptune=chart["planets"]["Нептун"],
         saturn=saturn,
         mars=mars,
@@ -95,6 +103,17 @@ async def handle_transit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         aspects=aspects
         )
         await context.bot.send_message(chat_id=chat_id, text=message, parse_mode="HTML")
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=(
+                "❓ <b>Остались вопросы?</b>\n"
+                "🔹 Напиши сообщение в Telegram-канал: <a href='https://t.me/lifeinastro'>@lifeinastro</a>\n"
+                "🤖 Или задай вопрос нашему помощнику: <a href='https://t.me/lifeinastro_bot'>@lifeinastro_bot</a>"
+            ),
+            parse_mode="HTML",
+            disable_web_page_preview=True
+        )
+
 
     except Exception as e:
         logger.error("Ошибка анализа транзита: %s", e)
