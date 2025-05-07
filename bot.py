@@ -21,12 +21,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def run():
-    app.run(host="0.0.0.0", port=8080)
-
-    # Запускаем Flask-сервер в отдельном потоке
-    threading.Thread(target=run).start()
-
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
