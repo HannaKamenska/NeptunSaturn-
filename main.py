@@ -1,4 +1,5 @@
 import threading
+import asyncio
 from server import app as flask_app
 from bot import main as telegram_main
 
@@ -8,7 +9,7 @@ def run_flask():
 
 # Запускаем Telegram-бота
 def run_telegram():
-    import asyncio
+    # запускаем асинхронную функцию корректно
     asyncio.run(telegram_main())
 
 if __name__ == "__main__":
