@@ -1,7 +1,7 @@
-app = "neptunsaturn"  # Можно другое имя, но оно должно быть уникальным
+app = "neptunsaturn"
 
 [build]
-  builder = "heroku/buildpacks:20"
+  dockerfile = "Dockerfile"
 
 [env]
   PORT = "8080"
@@ -13,3 +13,7 @@ app = "neptunsaturn"  # Можно другое имя, но оно должно
   [[services.ports]]
     handlers = ["http"]
     port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
