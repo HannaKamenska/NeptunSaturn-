@@ -14,4 +14,6 @@ def run_telegram():
 
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
+    import time
+    time.sleep(2)  # 🕒 даём Flask время запуститься
     run_telegram()
