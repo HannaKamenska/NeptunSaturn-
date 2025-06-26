@@ -2,18 +2,16 @@ import logging
 import os
 import json
 import threading
-from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackQueryHandler, ContextTypes
 from astro_calc import process_user_data
 from ai_interpreter import generate_transit_message
 from server import app  # импортируем Flask-приложение
 
-load_dotenv()
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 if not TELEGRAM_BOT_TOKEN:
-    raise ValueError("❌ TELEGRAM_BOT_TOKEN не найден в .env")
+    raise ValueError("❌ TELEGRAM_BOT_TOKEN не найден в переменных окружения")
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
