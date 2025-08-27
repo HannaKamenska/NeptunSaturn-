@@ -105,7 +105,7 @@ async def handle_transit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             chat_id=chat_id,
             text=(
                 "❓ <b>Остались вопросы?</b>\n"
-                "🔹 Заполни короткую форму — и я отвечу, как только смогу 👉 <a href='https://forms.gle/YuCsqzEbuYAQ6eba8</a>\n"
+                "🔹 Заполни короткую форму — и я отвечу, как только смогу 👉 <a href='https://forms.gle/YuCsqzEbuYAQ6eba8'>форма</a>\n"
                 "🤖 Или задай вопрос нашему помощнику: <a href='https://t.me/lifeinastro_bot'>@lifeinastro_bot</a>"
             ),
             parse_mode="HTML",
