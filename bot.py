@@ -94,13 +94,20 @@ async def handle_transit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         logger.info(f"📌 Данные для анализа: Сатурн={saturn}, Марс={mars}, Юпитер={jupiter}, Аспекты={len(aspects)} шт.")
 
         message = generate_transit_message(
-        neptune=chart["planets"]["Нептун"],
-        saturn=saturn,
-        mars=mars,
-        jupiter=jupiter,
-        aspects=aspects
+            neptune=chart["planets"]["Нептун"],
+            saturn=saturn,
+            mars=mars,
+            jupiter=jupiter,
+            aspects=aspects
         )
-        await context.bot.send_message(chat_id=chat_id, text=message, parse_mode="HTML")
+        if not message or not message.strip():
+            await context.bot.send_message(
+                chat_id=chat_id,
+                text="⚠️ Не удалось сгенерировать рекомендации. Попробуйте ещё раз или обратитесь к поддержке.",
+                parse_mode="HTML"
+            )
+        else:
+            await context.bot.send_message(chat_id=chat_id, text=message, parse_mode="HTML")
         await context.bot.send_message(
             chat_id=chat_id,
             text=(
