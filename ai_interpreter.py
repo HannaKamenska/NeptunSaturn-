@@ -82,7 +82,7 @@ def generate_transit_message(neptune, saturn, mars, jupiter, aspects):
 
     try:
         chat_completion = client.chat.completions.create(
-            model="gpt-5",
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_context}
