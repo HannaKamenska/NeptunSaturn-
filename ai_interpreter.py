@@ -87,7 +87,6 @@ def generate_transit_message(neptune, saturn, mars, jupiter, aspects):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_context}
             ],
-            temperature=0.6,
             max_completion_tokens=1000
         )
         return chat_completion.choices[0].message.content.strip()
